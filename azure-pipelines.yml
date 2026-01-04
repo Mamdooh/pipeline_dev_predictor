@@ -19,6 +19,6 @@ steps:
   displayName: Deploy
   inputs:
     azureSubscription: 'Pipeline-Dev_ResourceConn'
-    containerAppName: 'uae-modrek-pipeline-dev'
+    containerAppName: 'uae-modrek-pipeline-dev/pipeline-predictor'
     resourceGroup: 'uae-modrek-rg'
     imageToDeploy: 'modrekregistry.azurecr.io/pipeline_dev_predictor:latest'
