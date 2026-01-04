@@ -8,10 +8,17 @@ pool:
 
 steps:
 - task: Docker@2
-  displayName: Build and Push Predictor
+  displayName: Build and Push
   inputs:
     containerRegistry: 'Pipeline-Dev_RegConn'
     repository: 'pipeline_dev_predictor'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: '$(Build.BuildId)'
+    tags: 'latest'
+- task: AzureContainerApps@1
+  displayName: Deploy 
+  inputs:
+    azureSubscription: 'Pipeline-Dev_ResourceConn'
+    resourceGroup: 'uae-modrek-rg'
+    imageToDeploy: 'modrekregistry.azurecr.io/pipeline_dev_predictor:latest'
+    
