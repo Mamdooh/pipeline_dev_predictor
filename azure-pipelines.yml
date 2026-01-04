@@ -14,4 +14,4 @@ steps:
     repository: 'pipeline_dev_predictor'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: '$(Build.BuildId)'
+    tags: 'latest'
