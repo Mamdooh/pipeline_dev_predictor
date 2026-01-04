@@ -16,9 +16,9 @@ steps:
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
 - task: AzureContainerApps@1
-  displayName: Deploy 
+  displayName: Deploy
   inputs:
     azureSubscription: 'Pipeline-Dev_ResourceConn'
+    containerAppName: 'uae-modrek-pipeline-dev'
     resourceGroup: 'uae-modrek-rg'
     imageToDeploy: 'modrekregistry.azurecr.io/pipeline_dev_predictor:latest'
-    
