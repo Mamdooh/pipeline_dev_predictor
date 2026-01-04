@@ -15,10 +15,11 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
-- task: AzureContainerApps@1
+
+- task: AzureCLI@2
   displayName: Deploy
   inputs:
     azureSubscription: 'Pipeline-Dev_ResourceConn'
-    containerAppName: 'uae-modrek-pipeline-dev/pipeline-predictor'
-    resourceGroup: 'uae-modrek-rg'
-    imageToDeploy: 'modrekregistry.azurecr.io/pipeline_dev_predictor:latest'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az containerapp update --name uae-modrek-pipeline-dev --resource-group uae-modrek-rg --container-name pipeline-predictor --image modrekregistry.azurecr.io/pipeline_dev_predictor:latest'
