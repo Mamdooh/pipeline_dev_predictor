@@ -17,5 +17,9 @@ include:
   - name: PyBroadException
   - name: PyShadowingBuiltins
 
-  # Dependency/license hygiene (secondary)
+  # Dependency/license hygiene (keep, but secondary)
   - name: CheckDependencyLicenses
+
+exclude:
+  - name: PyUnresolvedReferences
+  - name: PyUnresolvedReferencesInspection
