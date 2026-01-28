@@ -1,0 +1,79 @@
+name: Branch Name Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches-ignore:
+      - main
+      - dev
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          echo "Checking: $BRANCH_NAME"
+          
+          # Pattern: type/description OR type/description-123
+          PATTERN="^(feature|bugfix|hotfix|chore|docs|refactor|test|ci)/[a-z0-9]+([a-z0-9\-]*[a-z0-9]+)?(-[0-9]+)?$"
+          
+          if [[ ! "$BRANCH_NAME" =~ $PATTERN ]]; then
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "❌ INVALID BRANCH NAME"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo ""
+            echo "Current: $BRANCH_NAME"
+            echo ""
+            echo "Required format:"
+            echo "  <type>/<description>"
+            echo "  <type>/<description-issue-number>"
+            echo ""
+            echo "Allowed types:"
+            echo "  • feature  - New features"
+            echo "  • bugfix   - Bug fixes"
+            echo "  • hotfix   - Urgent fixes"
+            echo "  • chore    - Maintenance"
+            echo "  • docs     - Documentation"
+            echo "  • refactor - Code refactoring"
+            echo "  • test     - Tests only"
+            echo "  • ci       - CI/CD changes"
+            echo ""
+            echo "Rules:"
+            echo "  • Type must be lowercase"
+            echo "  • Description must be lowercase"
+            echo "  • Use hyphens, not underscores"
+            echo "  • Optional issue number at end"
+            echo ""
+            echo "Valid examples:"
+            echo "  ✅ feature/add-excel-export"
+            echo "  ✅ bugfix/pdf-timeout-67"
+            echo "  ✅ hotfix/security-patch"
+            echo "  ✅ chore/update-deps"
+            echo ""
+            echo "Invalid examples:"
+            echo "  ❌ Feature/something (capital letter)"
+            echo "  ❌ feature/my_branch (underscore)"
+            echo "  ❌ test (missing type/)"
+            echo "  ❌ feature/ (no description)"
+            echo ""
+            echo "To fix, rename your branch:"
+            echo "  git branch -m $BRANCH_NAME <type>/<description>"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            exit 1
+          fi
+          
+          echo "✅ Branch name is valid!"
+          
+          # Extract and display info
+          TYPE=$(echo "$BRANCH_NAME" | cut -d'/' -f1)
+          DESC=$(echo "$BRANCH_NAME" | cut -d'/' -f2)
+          
+          echo ""
+          echo "Branch info:"
+          echo "  Type: $TYPE"
+          echo "  Description: $DESC"
