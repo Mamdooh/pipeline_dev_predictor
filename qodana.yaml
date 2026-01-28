@@ -4,6 +4,12 @@ linter: jetbrains/qodana-python:2025.2
 profile:
   name: qodana.recommended
 
+python:
+  dependencies:
+    - requirements.qodana.txt
+  django:
+    enabled: true
+
 include:
   # Python security
   - name: PySecurity
@@ -17,9 +23,5 @@ include:
   - name: PyBroadException
   - name: PyShadowingBuiltins
 
-  # Dependency/license hygiene (keep, but secondary)
+  # Dependency/license hygiene (secondary)
   - name: CheckDependencyLicenses
-
-exclude:
-  - name: PyUnresolvedReferences
-  - name: PyUnresolvedReferencesInspection
