@@ -1,10 +1,135 @@
 ####################################################################################################################
 # WARNING: Do not store sensitive information in this file, as its contents will be included in the Qodana report. #
 ####################################################################################################################
-
 version: "1.0"
 linter: jetbrains/qodana-python:2025.2
+
 profile:
   name: qodana.recommended
+
+failThreshold: 0
+
 include:
   - name: CheckDependencyLicenses
+  - name: SourceCode
+    paths:
+      - "**/*.py"
+
+exclude:
+  - name: Tests
+    paths:
+      - "tests/**"
+      - "test_*.py"
+      - "**/*_test.py"
+      - "**/test_*.py"
+  - name: Migrations
+    paths:
+      - "migrations/**"
+      - "**/migrations/**"
+  - name: VirtualEnv
+    paths:
+      - "venv/**"
+      - ".venv/**"
+      - "env/**"
+      - ".git/**"
+
+inspections:
+  - group: Security
+    enabled: true
+    severity: ERROR
+  
+  - inspection: SqlInjection
+    enabled: true
+    severity: ERROR
+  
+  - inspection: XssVulnerability
+    enabled: true
+    severity: ERROR
+  
+  - inspection: CommandInjection
+    enabled: true
+    severity: ERROR
+  
+  - inspection: PathTraversal
+    enabled: true
+    severity: ERROR
+  
+  - inspection: HardcodedPassword
+    enabled: true
+    severity: ERROR
+  
+  - inspection: HardcodedApiKey
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafeDeserialization
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafePickle
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafeYamlLoad
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafeEval
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafeExec
+    enabled: true
+    severity: ERROR
+  
+  - inspection: OpenRedirect
+    enabled: true
+    severity: ERROR
+  
+  - inspection: CsrfVulnerability
+    enabled: true
+    severity: ERROR
+  
+  - inspection: WeakCryptography
+    enabled: true
+    severity: WARNING
+  
+  - inspection: InsecureCryptoUsage
+    enabled: true
+    severity: WARNING
+  
+  - inspection: InsecureRandomness
+    enabled: true
+    severity: WARNING
+  
+  - inspection: DebugMode
+    enabled: true
+    severity: WARNING
+  
+  - inspection: FlaskDebugMode
+    enabled: true
+    severity: ERROR
+  
+  - inspection: FlaskSecretKey
+    enabled: true
+    severity: ERROR
+  
+  - inspection: DjangoRawSql
+    enabled: true
+    severity: WARNING
+  
+  - inspection: UnusedCode
+    enabled: true
+    severity: INFO
+  
+  - inspection: CodeDuplication
+    enabled: true
+    severity: INFO
+
+dependencyOverrides:
+  - name: python
+    enabled: true
+
+output:
+  sarif: true
+  json: true
