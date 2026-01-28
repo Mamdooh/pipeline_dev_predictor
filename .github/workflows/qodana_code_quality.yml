@@ -3,8 +3,6 @@ on:
   pull_request:
     branches:
       - master
-      
-
 
 jobs:
   qodana:
@@ -26,6 +24,7 @@ jobs:
         with:
           pr-mode: false
           args: --fail-threshold,0
+          baseline: qodana.sarif.json
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_1505967784 }}
           QODANA_ENDPOINT: 'https://qodana.cloud'
