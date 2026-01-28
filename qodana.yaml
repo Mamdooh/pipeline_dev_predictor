@@ -1,10 +1,74 @@
-####################################################################################################################
-# WARNING: Do not store sensitive information in this file, as its contents will be included in the Qodana report. #
-####################################################################################################################
-
 version: "1.0"
-linter: jetbrains/qodana-python:2025.2
 profile:
   name: qodana.recommended
-include:
-  - name: CheckDependencyLicenses
+failThreshold: 0
+
+exclude:
+  - name: Tests
+    paths:
+      - "tests/**"
+      - "**/*test*.py"
+  - name: Migrations
+    paths:
+      - "**/migrations/**"
+  - name: VirtualEnv
+    paths:
+      - "venv/**"
+      - ".venv/**"
+      - "node_modules/**"
+
+inspections:
+  - group: Security
+    enabled: true
+    severity: ERROR
+  
+  - inspection: SqlInjection
+    enabled: true
+    severity: ERROR
+  
+  - inspection: XssVulnerability
+    enabled: true
+    severity: ERROR
+  
+  - inspection: CommandInjection
+    enabled: true
+    severity: ERROR
+  
+  - inspection: PathTraversal
+    enabled: true
+    severity: ERROR
+  
+  - inspection: HardcodedPassword
+    enabled: true
+    severity: ERROR
+  
+  - inspection: HardcodedApiKey
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafeDeserialization
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafeEval
+    enabled: true
+    severity: ERROR
+  
+  - inspection: UnsafeExec
+    enabled: true
+    severity: ERROR
+  
+  - inspection: WeakCryptography
+    enabled: true
+    severity: WARNING
+  
+  - inspection: InsecureRandomness
+    enabled: true
+    severity: WARNING
+
+dependencyOverrides:
+  - name: python
+    enabled: true
+
+output:
+  sarif: true
