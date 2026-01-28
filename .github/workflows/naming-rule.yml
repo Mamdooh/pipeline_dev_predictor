@@ -1,0 +1,21 @@
+name: Branch Name Policy
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name
+        run: |
+          BRANCH="${{ github.head_ref }}"
+
+          echo "Checking branch: $BRANCH"
+
+          if [[ ! "$BRANCH" =~ ^(feature|bugfix|hotfix|release)\/[a-z0-9._-]+$ ]]; then
+            echo "::error::Invalid branch name."
+            echo "Expected: feature/xxx | bugfix/xxx | hotfix/xxx | release/xxx"
+            exit 1
+          fi
