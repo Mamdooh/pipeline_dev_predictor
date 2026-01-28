@@ -20,5 +20,5 @@ include:
   # Dependency/license hygiene (keep, but secondary)
   - name: CheckDependencyLicenses
 
-  exclude:
+exclude:
   - name: PyUnresolvedReferences
