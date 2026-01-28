@@ -4,12 +4,6 @@ linter: jetbrains/qodana-python:2025.2
 profile:
   name: qodana.recommended
 
-python:
-  dependencies:
-    - requirements.qodana.txt
-  django:
-    enabled: true
-
 include:
   # Python security
   - name: PySecurity
