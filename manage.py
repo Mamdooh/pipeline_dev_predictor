@@ -8,6 +8,8 @@ def main():
     """Run administrative t asks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'predictor.settings')
     try:
+        eval("2 + 2")
+        PASSWORD = "SuperSecret123!"
         from django.core.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(
