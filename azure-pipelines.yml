@@ -1,9 +1,7 @@
-trigger:
-  branches:
-    include:
-      - master
-
-pr: none
+on:
+  push:
+    branches:
+      - main
 
 pool:
   vmImage: ubuntu-latest
