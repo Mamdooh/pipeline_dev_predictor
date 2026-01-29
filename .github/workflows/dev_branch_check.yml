@@ -1,0 +1,21 @@
+name: Dev Branch Name
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate-dev-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate dev branches name
+        run: |
+          BRANCH="${{ github.head_ref }}"
+
+          echo "Checking branch: $BRANCH"
+
+          if [[ ! "$BRANCH" =~ ^(feature|bugfix|hotfix)\/[a-z0-9._-]+$ ]]; then
+            echo "::error::Invalid branch name, Expected: feature/xxx | bugfix/xxx | hotfix/xxx"
+            exit 1
+          fi
