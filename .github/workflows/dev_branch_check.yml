@@ -3,6 +3,8 @@ name: Dev Branch Name
 on:
   workflow_dispatch:
   pull_request:
+    branches:
+      - master
     types: [opened, edited, synchronize]
 
 jobs:
