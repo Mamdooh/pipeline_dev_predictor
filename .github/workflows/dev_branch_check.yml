@@ -1,4 +1,4 @@
-name: Branch Name Policy
+name: Dev Branch Name
 
 on:
   workflow_dispatch:
@@ -6,16 +6,16 @@ on:
     types: [opened, edited, synchronize]
 
 jobs:
-  validate-branch-name:
+  validate-dev-name:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate branch name
+      - name: Validate dev branches name
         run: |
           BRANCH="${{ github.head_ref }}"
 
           echo "Checking branch: $BRANCH"
 
-          if [[ "$BRANCH" != "dev" ]]; then
-            echo "::error::Incoming branch is not Dev."
+          if [[ ! "$BRANCH" =~ ^(feature|bugfix|hotfix)\/[a-z0-9._-]+$ ]]; then
+            echo "::error::Invalid branch name, Expected: feature/xxx | bugfix/xxx | hotfix/xxx"
             exit 1
           fi
