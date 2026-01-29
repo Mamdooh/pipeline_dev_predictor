@@ -15,8 +15,7 @@ jobs:
 
           echo "Checking branch: $BRANCH"
 
-          if [[ ! "$BRANCH" =~ ^(feature|bugfix|hotfix|release)\/[a-z0-9._-]+$ ]]; then
-            echo "::error::Invalid branch name."
-            echo "Expected: feature/xxx | bugfix/xxx | hotfix/xxx | release/xxx"
+          if [[ "$BRANCH" != "dev" ]]; then
+            echo "::error::Incoming branch is not Dev."
             exit 1
           fi
